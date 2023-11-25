@@ -5,9 +5,9 @@ install=false
 
 show_help(){
     echo "Deploy basic ssh config to $HOME/.ssh/config."
-    echo "usage: $0 [-f] [-i] [-r] [-s] [-h]"
-    echo "  -f  enable forwarding; by default disabled "
-    echo "  -i  private key file name"
+    echo "usage: $0 [-c] [-i] [-r] [-u] [-h]"
+    echo "  -c  bool; uninstall docker from remote host and cleanup; default: false "
+    echo "  -i  bool; install docker on remote host; default false"
     echo "  -r  remote host name"
     echo "  -u  remote host user name"
     echo "  -h  show help"
