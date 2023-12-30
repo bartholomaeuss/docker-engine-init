@@ -15,21 +15,21 @@ show_help(){
 }
 
 copy_scripts(){
-    ssh -l "$user" "$remote" "mkdir -p ~/scripts"
-    scp ./install_docker_engine.sh "$user@$remote":~/scripts/install_docker_engine.sh
-    ssh -l "$user" "$remote" "chmod +x ~/scripts/install_docker_engine.sh"
-    scp ./uninstall_docker_engine_and_cleanup.sh "$user@$remote":~/scripts/uninstall_docker_engine_and_cleanup.sh
-    ssh -l "$user" "$remote" "chmod +x ~/scripts/uninstall_docker_engine_and_cleanup.sh"
+    ssh -v -l "$user" "$remote" "mkdir -p ~/scripts"
+    scp -v ./install_docker_engine.sh "$user@$remote":~/scripts/install_docker_engine.sh
+    ssh -v -l "$user" "$remote" "chmod +x ~/scripts/install_docker_engine.sh"
+    scp -v ./uninstall_docker_engine_and_cleanup.sh "$user@$remote":~/scripts/uninstall_docker_engine_and_cleanup.sh
+    ssh -v -l "$user" "$remote" "chmod +x ~/scripts/uninstall_docker_engine_and_cleanup.sh"
 
 }
 
 clean_uninstall_docker(){
-    start ssh -l "$user" "$remote" "sudo ~/scripts/uninstall_docker_engine_and_cleanup.sh; echo \"Press return to close window...\"; read"
+    start ssh -v -l "$user" "$remote" "sudo ~/scripts/uninstall_docker_engine_and_cleanup.sh; echo \"Press return to close window...\"; read"
     exit 0
 }
 
 install_docker(){
-    start ssh -l "$user" "$remote" "sudo ~/scripts/install_docker_engine.sh; echo \"Press return to close window...\"; read"
+    start ssh -v -l "$user" "$remote" "sudo ~/scripts/install_docker_engine.sh; echo \"Press return to close window...\"; read"
     exit 0
 }
 
