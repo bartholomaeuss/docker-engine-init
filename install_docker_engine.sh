@@ -17,3 +17,4 @@ echo \
 sudo apt-get -y install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 sudo usermod -aG docker "$USER"
 newgrp docker
+exit 0

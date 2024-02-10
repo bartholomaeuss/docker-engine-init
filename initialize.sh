@@ -24,12 +24,12 @@ copy_scripts(){
 }
 
 clean_uninstall_docker(){
-    start ssh -v -l "$user" "$remote" "sudo ~/scripts/uninstall_docker_engine_and_cleanup.sh; echo \"Press return to close window...\"; read"
+    start ssh -v -l "$user" "$remote" ". ~/scripts/uninstall_docker_engine_and_cleanup.sh; echo \"Press return to close window...\"; read"
     exit 0
 }
 
 install_docker(){
-    start ssh -v -l "$user" "$remote" "sudo ~/scripts/install_docker_engine.sh; echo \"Press return to close window...\"; read"
+    start ssh -v -l "$user" "$remote" ". ~/scripts/install_docker_engine.sh; echo \"Press return to close window...\"; read"
     exit 0
 }
 
