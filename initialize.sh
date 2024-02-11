@@ -5,9 +5,7 @@ install=false
 
 show_help(){
     echo "Deploy basic ssh config to $HOME/.ssh/config."
-    echo "usage: $0 [-c] [-i] [-r] [-u] [-h]"
-    echo "  -c  bool; uninstall docker from remote host and cleanup; default: false "
-    echo "  -i  bool; install docker on remote host; default false"
+    echo "usage: $0 [-r] [-u] [-h]"
     echo "  -r  remote host name"
     echo "  -u  remote host user name"
     echo "  -h  show help"
@@ -17,30 +15,12 @@ show_help(){
 copy_scripts(){
     ssh -v -l "$user" "$remote" "mkdir -p ~/scripts"
     scp -v ./install_docker_engine.sh "$user@$remote":~/scripts/install_docker_engine.sh
-    ssh -v -l "$user" "$remote" "chmod +x ~/scripts/install_docker_engine.sh"
     scp -v ./uninstall_docker_engine_and_cleanup.sh "$user@$remote":~/scripts/uninstall_docker_engine_and_cleanup.sh
-    ssh -v -l "$user" "$remote" "chmod +x ~/scripts/uninstall_docker_engine_and_cleanup.sh"
 
-}
-
-clean_uninstall_docker(){
-    start ssh -v -l "$user" "$remote" ". ~/scripts/uninstall_docker_engine_and_cleanup.sh; echo \"Press return to close window...\"; read"
-    exit 0
-}
-
-install_docker(){
-    start ssh -v -l "$user" "$remote" ". ~/scripts/install_docker_engine.sh; echo \"Press return to close window...\"; read"
-    exit 0
 }
 
 while getopts ":c:i:r:u:h" opt; do
   case $opt in
-    c)
-      clean_uninstall=true
-      ;;
-    i)
-      install=true
-      ;;
     r)
       remote="$OPTARG"
       ;;
@@ -61,13 +41,6 @@ while getopts ":c:i:r:u:h" opt; do
   esac
 done
 
-if "$install" && "$clean_uninstall"
-then
-  echo "script can't install and uninstall simultaneously"
-  show_help
-  exit 1
-fi
-
 if [ "$#" -le 0 ]
 then
   echo "script requires an option"
@@ -87,13 +60,3 @@ then
 fi
 
 copy_scripts
-
-if $clean_uninstall
-then
-  clean_uninstall_docker
-fi
-
-if $install
-then
-  install_docker
-fi
